@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>L.A.U. - Website Archive</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <main class="MainCanvas WebArchivePage_CenterWrapper">
+
+        <section class="WebArchivePage_Logo">
+            <h1><a href="Homepage.html" class="WebArchivePage_Logo_Link">L.A.U.</a></h1>
+            <p class="WebArchivePage_Logo_Sub">Library Access Unit</p>
+            <p class="WebArchivePage_Logo_PageName">Website Archive</p>
+        </section>
+
+        <section class="WebArchivePage_SearchFilterWrapper">
+            <div class="WebArchivePage_SearchFieldRow">
+                <input type="text" class="WebArchivePage_SearchInput" placeholder="Type characters to live filter...">
+                <button class="WebArchivePage_FilterToggleBtn" aria-label="Toggle Category Filters">▾</button>
+            </div>
+
+            <div class="WebArchivePage_FilterSettingsBox">
+                <div class="WebArchivePage_FilterColumns">
+
+                    <div class="WebArchivePage_FilterGroup">
+                        <h4>Main Categories</h4>
+                        <div id="MainCategoryFilters"></div>
+                    </div>
+
+                    <div class="WebArchivePage_FilterGroup">
+                        <h4>Sub Categories</h4>
+                        <div id="SubCategoryFilters">
+                            <p id="SubCategoryPlaceholder">Click a main category arrow to inspect sub options...</p>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="WebArchivePage_FilterActions">
+                    <button class="WebArchivePage_ActionBtn WebArchivePage_ActionCancel">Cancel</button>
+                    <button class="WebArchivePage_ActionBtn WebArchivePage_ActionApply">Apply</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="WebArchivePage_DataBoard" id="DynamicDataBoard"></section>
+
+    </main>
+
+    <div class="WebArchivePage_ModalOverlay">
+        <div class="WebArchivePage_ModalBox">
+            <button class="WebArchivePage_ModalCloseBtn">&times;</button>
+
+            <div class="WebArchivePage_ModalHeader">
+                <span class="WebArchivePage_ModalIcon">⏳</span>
+                <div>
+                    <a href="#" target="_blank" class="WebArchivePage_ModalTitleLink">Loading...</a>
+                    <span class="WebArchivePage_ModalSubTag">Processing</span>
+                </div>
+            </div>
+
+            <div class="WebArchivePage_ModalBody">
+                <h4>Detailed Description</h4>
+                <p class="WebArchivePage_ModalDeepDesc">Fetching latest parameters from Google Sheets matrix...</p>
+
+                <div class="WebArchivePage_ModalTradeOffs">
+                    <div class="WebArchivePage_TradeOffColumn">
+                        <h5>Pros</h5>
+                        <ul>
+                            <li>Loading...</li>
+                        </ul>
+                    </div>
+                    <div class="WebArchivePage_TradeOffColumn">
+                        <h5>Cons</h5>
+                        <ul>
+                            <li>Loading...</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="Footer">
+        <div class="FooterContent">
+            <h3>About L.A.U.</h3>
+            <p>A centralized library and utility dashboard tailored for family file access, tracking, and shared wisdom
+                resources.</p>
+            <p>Contact: <a href="mailto:familyhub@example.com">familyhub@example.com</a></p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

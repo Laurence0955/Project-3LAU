@@ -1,0 +1,620 @@
+/* ==========================================
+   1. GLOBAL SSHET
+   ========================================== */
+
+/* 1.1 html & body base setup */
+html {
+    scroll-behavior: smooth;
+    box-sizing: border-box;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background-color: #ffffff; /* Solid White Canvas */
+    color: #000000;            /* Pitch Black Text */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* ==========================================
+   2. Header
+   ========================================== */
+
+/* 2.1 fixed header box wrapper */
+.TopHeaderBox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #000000; /* Sharp black divider line */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10%;
+    z-index: 1000;
+}
+
+/* 2.2 header branding text */
+.HeaderLogo {
+    font-weight: bold;
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+}
+
+/* 2.3 nav links and interactions */
+.HeaderNav a {
+    color: #000000;
+    text-decoration: none;
+    margin-left: 2rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: opacity 0.2s ease;
+}
+
+.HeaderNav a:hover {
+    opacity: 0.6;
+}
+
+/* ==========================================
+   3. UNIVERSAL CANVAS
+   ========================================== */
+
+/* 3.1 core layout container */
+.MainCanvas {
+    flex: 1; /* Pushes the footer down if content is short */
+    margin-top: 0; /* Cushion so fixed header doesn't block hero */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 6rem 2rem;
+}
+
+/* ==========================================
+   4. FOOTER
+   ========================================== */
+
+/* 4.1 bottom footer box container */
+.Footer {
+    width: 100%;
+    background-color: #ffffff;
+    border-top: 1px solid #000000;
+    padding: 2.5rem 10%;
+    margin-top: auto;
+}
+
+/* 4.2 footer inner layout boundaries */
+.FooterContent {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+/* 4.3 footer typography and link styles */
+.FooterContent h3 {
+    margin-top: 0;
+    font-size: 1.1rem;
+}
+
+.FooterContent p {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    opacity: 0.8;
+}
+
+.FooterContent a {
+    color: #000000;
+    font-weight: bold;
+}
+
+/* ==========================================
+   5. HOME PAGE
+   ========================================== */
+
+/* 5.1 central logo title area */
+.HomePage_Logo {
+    text-align: center;
+    margin-bottom: 5rem;
+    margin-top: 3rem;
+}
+
+/* 5.2 acronym primary heading */
+.HomePage_Logo_Main {
+    font-size: 5rem;
+    margin: 0;
+    letter-spacing: 0.5rem;
+    padding-left: 0.5rem;
+    font-weight: 700;
+    text-align: center;
+}
+
+/* 5.3 expansion subtitle text */
+.HomePage_Logo_Sub {
+    font-size: 1.2rem;
+    margin-top: 0.5rem;
+    letter-spacing: 0.1rem;
+    padding-left: 0.1rem;
+    text-transform: uppercase;
+    opacity: 0.7;
+    text-align: center;
+}
+
+/* 5.4 dashboard cards grid layout */
+.HomePage_PagesDirectory {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); 
+    gap: 1.5rem;                           
+    width: 100%;
+    max-width: 1100px;                     
+    margin-bottom: 6rem;
+}
+
+/* 5.5 block button placeholder styles */
+.HomePage_PagesDirectory_Button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 120px;
+    background-color: #ffffff;
+    border: 1px solid #000000;             
+    color: #000000;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    text-transform: capitalize;
+    transition: all 0.2s ease;
+}
+
+.HomePage_PagesDirectory_Button:hover {
+    background-color: #000000;
+    color: #ffffff;
+}
+
+/* 5.6 core active portal link highlight */
+.HomePage_PagesDirectory_Button_Active {
+    border: 2px solid #000000;
+    font-weight: 700;
+}
+
+/* 5.7 responsive display screen constraint */
+@media (max-width: 900px) {
+    .HomePage_PagesDirectory {
+        grid-template-columns: repeat(3, 1fr); 
+    }
+}
+
+/* ==========================================
+   6. WEB ARCHIVE (WebArchive)
+   ========================================== */
+
+/* Layout core centering structural alignment */
+.WebArchivePage_CenterWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    width: 100%;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+/* 6.1 central logo block elements */
+.WebArchivePage_Logo {
+    text-align: center;
+    margin-bottom: 3rem;
+    margin-top: 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.WebArchivePage_Logo_Link {
+    font-size: 5rem;
+    margin: 0;
+    letter-spacing: 0.5rem;
+    padding-left: 0.5rem; /* Offsets tracking margin to ensure absolute screen centering */
+    font-weight: 700;
+    color: #000000;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.WebArchivePage_Logo_Sub {
+    font-size: 1.2rem;
+    margin: 0.5rem 0 0 0;
+    letter-spacing: 0.1rem;
+    padding-left: 0.1rem;
+    text-transform: uppercase;
+    opacity: 0.7;
+}
+
+.WebArchivePage_Logo_PageName {
+    font-size: 1.1rem;
+    opacity: 0.5;
+    margin-top: 0.25rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05rem;
+}
+
+/* 6.2 search entry filter layout row */
+.WebArchivePage_SearchFilterWrapper {
+    width: 100%;
+    max-width: 600px;
+    margin-bottom: 4rem;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.WebArchivePage_SearchFieldRow {
+    display: flex;
+    border: 1px solid #000000;
+    background-color: #ffffff;
+}
+
+.WebArchivePage_SearchInput {
+    flex: 1;
+    border: none;
+    padding: 1rem;
+    font-size: 1rem;
+    font-family: inherit;
+    outline: none;
+}
+
+.WebArchivePage_FilterToggleBtn {
+    background: none;
+    border: none;
+    border-left: 1px solid #000000;
+    padding: 0 1.2rem;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.WebArchivePage_FilterToggleBtn:hover {
+    background-color: #000000;
+    color: #ffffff;
+}
+
+/* 6.3 dynamic options choice block dropdown */
+.WebArchivePage_FilterSettingsBox {
+    display: none;
+    position: absolute;
+    top: 105%;
+    left: 0;
+    width: 100%;
+    background-color: #ffffff;
+    border: 1px solid #000000;
+    padding: 1.5rem;
+    z-index: 10;
+    box-sizing: border-box;
+}
+
+/* 6.3.1 dynamic child nodes configuration */
+.WebArchivePage_FilterColumns {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 1.5rem;
+    min-height: 200px;
+}
+
+.WebArchivePage_FilterGroup {
+    flex: 1;
+}
+
+.WebArchivePage_FilterGroup h4 {
+    margin: 0.5rem 0;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    opacity: 0.6;
+    border-bottom: 1px solid #f0f0f0;
+    padding-bottom: 0.25rem;
+}
+
+.WebArchivePage_MainCatRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+    border-bottom: 1px solid #f0f0f0;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+
+.WebArchivePage_MainCatRow:hover {
+    background-color: #fafafa;
+}
+
+.WebArchivePage_MainCatLeft {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.WebArchivePage_MainCatLeft label {
+    font-size: 0.95rem;
+    cursor: pointer;
+    user-select: none;
+}
+
+.WebArchivePage_ToggleArrow {
+    font-size: 0.85rem;
+    font-weight: bold;
+    user-select: none;
+    opacity: 0.5;
+    padding: 0 0.25rem;
+}
+
+.WebArchivePage_SubPanel {
+    display: none;
+    animation: fadeInFilters 0.2s ease-out;
+}
+
+.WebArchivePage_SubPanel label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.5rem;
+    font-size: 0.95rem;
+    cursor: pointer;
+    border-bottom: 1px solid #fafafa;
+}
+
+#SubCategoryPlaceholder {
+    color: #999999;
+    font-style: italic;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+    line-height: 1.4;
+}
+
+@keyframes fadeInFilters {
+    from { opacity: 0; transform: translateY(2px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Action Control Footers */
+.WebArchivePage_FilterActions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    padding-top: 0.5rem;
+}
+
+.WebArchivePage_ActionBtn {
+    padding: 0.5rem 1.5rem;
+    font-family: inherit;
+    font-weight: 600;
+    background-color: #ffffff;
+    border: 1px solid #000000;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.WebArchivePage_ActionBtn:hover {
+    background-color: #fafafa;
+}
+
+.WebArchivePage_ActionBtn.WebArchivePage_ActionCancel:hover {
+    background-color: #fff0f0;
+    border-color: #ff0000;
+    color: #ff0000;
+}
+
+.WebArchivePage_ActionBtn.WebArchivePage_ActionApply {
+    background-color: #000000;
+    color: #ffffff;
+}
+
+/* ==========================================
+   6.4 CARD LAYOUT LANES BOARD
+   ========================================== */
+.WebArchivePage_DataBoard {
+    width: 100%;
+    max-width: 1100px;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    margin-bottom: 4rem;
+    box-sizing: border-box;
+}
+
+.WebArchivePage_CategoryLane h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    border-left: 4px solid #000000;
+    padding-left: 0.75rem;
+    text-align: left;
+}
+
+.WebArchivePage_DeckSlider {
+    display: flex;
+    gap: 1.5rem;
+    overflow-x: auto;
+    padding: 1rem 0;
+    scroll-behavior: smooth;
+}
+
+.WebArchivePage_DeckSlider::-webkit-scrollbar {
+    height: 6px;
+}
+.WebArchivePage_DeckSlider::-webkit-scrollbar-thumb {
+    background-color: #000000;
+}
+.WebArchivePage_DeckSlider::-webkit-scrollbar-track {
+    background-color: #f0f0f0;
+}
+
+/* ==========================================
+   6.5 DATA CARDS STYLES
+   ========================================== */
+.WebArchivePage_Card {
+    flex: 0 0 300px;
+    background-color: #ffffff;
+    border: 1px solid #000000;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    box-sizing: border-box;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.WebArchivePage_Card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.WebArchivePage_CardHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+}
+
+.WebArchivePage_CardIcon {
+    font-size: 1.3rem;
+}
+
+.WebArchivePage_CardSubTag {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    background-color: #000000;
+    color: #ffffff;
+    padding: 0.2rem 0.5rem;
+    font-weight: 600;
+}
+
+.WebArchivePage_CardTitleLink {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #000000;
+    text-decoration: none;
+    margin-bottom: 0.5rem;
+    display: inline-block;
+    text-align: left;
+}
+
+.WebArchivePage_CardDesc {
+    font-size: 0.9rem;
+    line-height: 1.4;
+    margin: 0;
+    opacity: 0.8;
+    text-align: left;
+}
+
+/* ==========================================
+   6.6 DETAIL OVERLAY POPUP MODAL FRAME
+   ========================================== */
+.WebArchivePage_ModalOverlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 2000;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    box-sizing: border-box;
+}
+
+.WebArchivePage_ModalBox {
+    background-color: #ffffff;
+    border: 2px solid #000000;
+    width: 100%;
+    max-width: 550px;
+    padding: 2rem;
+    position: relative;
+    box-sizing: border-box;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+.WebArchivePage_ModalCloseBtn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 1.8rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.WebArchivePage_ModalHeader {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    border-bottom: 1px solid #000000;
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.WebArchivePage_ModalIcon {
+    font-size: 2.5rem;
+}
+
+.WebArchivePage_ModalTitleLink {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #000000;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+.WebArchivePage_ModalSubTag {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    opacity: 0.6;
+    font-weight: 600;
+    display: block;
+    text-align: left;
+}
+
+.WebArchivePage_ModalBody h4 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1rem;
+    text-transform: uppercase;
+    text-align: left;
+}
+
+.WebArchivePage_ModalDeepDesc {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin: 0 0 2rem 0;
+    opacity: 0.85;
+    text-align: left;
+}
+
+/* Scoped modal tradeoff system layout rules */
+.WebArchivePage_ModalTradeOffs {
+    display: flex;
+    gap: 2rem;
+}
+
+.WebArchivePage_TradeOffColumn {
+    flex: 1;
+}
+
+.WebArchivePage_TradeOffColumn h5 {
+    margin: 0 0 0.5rem 0;
+    font-size: 0.95rem;
+    border-bottom: 1px solid #000000;
+    padding-bottom: 0.25rem;
+    text-align: left;
+}
+
+.WebArchivePage_TradeOffColumn ul {
+    margin: 0;
+    padding-left: 1.2rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    text-align: left;
+}
