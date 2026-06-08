@@ -2,7 +2,7 @@
    1.0 WEBSITE ARCHIVE PAGE (WebArchive)
    ========================================== */
 
-const GOOGLE_SHEET_API_URL = "https://script.google.com/macros/s/AKfycbzKoXoa7eYTeiTou_J1BlgzIDFlrxEEURoRsoHQo4njTMKNakywr8zIesKx16iSC8tj9Q/exec";
+const GOOGLE_SHEET_API_URL = "https://script.google.com/macros/s/AKfycbxHKor-ewvBLH4XMS3N24AA9vRCmaSfl3h1dVjcz3x0wINXMXHCOdlcuyMNo2I8T0oLVw/exec"
 
 // DOM Anchors hooked to the WebArchive system classes
 const webArchiveDataBoard = document.getElementById('DynamicDataBoard');
@@ -196,7 +196,7 @@ function buildWebArchiveCards(data) {
             card.setAttribute('data-name', item.name);
             card.setAttribute('data-link', item.link);
             
-            const deepDesc = item.detaildescription || item.DetailDescriptio || item.Detaildescription || "";
+            const deepDesc = item.detaildescription || "";
             card.setAttribute('data-detaildesc', deepDesc);
             
             card.setAttribute('data-pros', item.pros || "");
