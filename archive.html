@@ -22,6 +22,8 @@
             <div class="WebArchivePage_SearchFieldRow">
                 <input type="text" class="WebArchivePage_SearchInput" placeholder="Type characters to live filter...">
                 <button class="WebArchivePage_FilterToggleBtn" aria-label="Toggle Category Filters">▾</button>
+
+                <button class="WebArchivePage_AddCardBtn" aria-label="Add New Website Resource">+</button>
             </div>
 
             <div class="WebArchivePage_FilterSettingsBox">
@@ -53,7 +55,10 @@
 
     <div class="WebArchivePage_ModalOverlay">
         <div class="WebArchivePage_ModalBox">
-            <button class="WebArchivePage_ModalCloseBtn">&times;</button>
+            <div class="WebArchivePage_ModalControlsRow">
+                <button class="WebArchivePage_ModalEditBtn" title="Edit this card content">✏️ Edit</button>
+                <button class="WebArchivePage_ModalCloseBtn">&times;</button>
+            </div>
 
             <div class="WebArchivePage_ModalHeader">
                 <span class="WebArchivePage_ModalIcon">⏳</span>
@@ -82,6 +87,75 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div class="WebArchivePage_FormOverlay" style="display: none;">
+        <div class="WebArchivePage_FormBox">
+            <button class="WebArchivePage_FormCloseBtn">&times;</button>
+
+            <h3 class="WebArchivePage_FormTitle">Add New Resource</h3>
+
+            <form id="WebArchiveHubForm">
+                <input type="hidden" id="Form_CardId" value="">
+
+                <div class="WebArchivePage_FormField">
+                    <label for="Form_MainCategorySelect">Main Category</label>
+                    <select id="Form_MainCategorySelect" required>
+                    </select>
+                    <input type="text" id="Form_MainCategoryNew" placeholder="Type new Main Category name..."
+                        style="display: none;">
+                </div>
+
+                <div class="WebArchivePage_FormField">
+                    <label for="Form_SubCategorySelect">Sub Category</label>
+                    <select id="Form_SubCategorySelect" required>
+                    </select>
+                    <input type="text" id="Form_SubCategoryNew" placeholder="Type new Sub Category name..."
+                        style="display: none;">
+                </div>
+
+                <div class="WebArchivePage_FormField">
+                    <label for="Form_Name">Website Name</label>
+                    <input type="text" id="Form_Name" placeholder="e.g., Uiverse" required>
+                </div>
+
+                <div class="WebArchivePage_FormField">
+                    <label for="Form_Icon">Icon Logo URL</label>
+                    <input type="url" id="Form_Icon" placeholder="https://example.com/favicon.png">
+                </div>
+
+                <div class="WebArchivePage_FormField">
+                    <label for="Form_Link">Website Link URL</label>
+                    <input type="url" id="Form_Link" placeholder="https://example.com" required>
+                </div>
+
+                <div class="WebArchivePage_FormField">
+                    <label for="Form_Description">Card Description (Short)</label>
+                    <input type="text" id="Form_Description" placeholder="Short description for front-facing cards..."
+                        required>
+                </div>
+
+                <div class="WebArchivePage_FormField">
+                    <label for="Form_DetailDescription">Detailed Description (Modal View)</label>
+                    <textarea id="Form_DetailDescription" rows="4"
+                        placeholder="Deep dive breakdown explanation of the tool features..."></textarea>
+                </div>
+
+                <div class="WebArchivePage_FormField">
+                    <label for="Form_Pros">Pros</label>
+                    <input type="text" id="Form_Pros" placeholder="e.g., Easy to use, Lightweight code snippets">
+                </div>
+
+                <div class="WebArchivePage_FormField">
+                    <label for="Form_Cons">Cons</label>
+                    <input type="text" id="Form_Cons" placeholder="e.g., Paywall blockades, Slow rendering scripts">
+                </div>
+
+                <div class="WebArchivePage_FormActions">
+                    <button type="submit" class="WebArchivePage_FormSubmitBtn">Save to Hub</button>
+                </div>
+            </form>
         </div>
     </div>
 

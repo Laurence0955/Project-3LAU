@@ -2,7 +2,7 @@
    1.0 WEBSITE ARCHIVE PAGE (WebArchive)
    ========================================== */
 
-const GOOGLE_SHEET_API_URL = "https://script.google.com/macros/s/AKfycbxHKor-ewvBLH4XMS3N24AA9vRCmaSfl3h1dVjcz3x0wINXMXHCOdlcuyMNo2I8T0oLVw/exec"
+const GOOGLE_SHEET_API_URL = "https://script.google.com/macros/s/AKfycbwYkvVsQhwlkIJI9yaJLsERH-9FGtkD73tzFoCZa7dMt54Int8Cla-wXgItzajyBrXqsg/exec"
 
 // DOM Anchors hooked to the WebArchive system classes
 const webArchiveDataBoard = document.getElementById('DynamicDataBoard');
@@ -14,7 +14,29 @@ const webArchiveSearchInput = document.querySelector('.WebArchivePage_SearchInpu
 const webArchiveModalOverlay = document.querySelector('.WebArchivePage_ModalOverlay');
 const webArchiveModalCloseBtn = document.querySelector('.WebArchivePage_ModalCloseBtn');
 
+// New DOM Anchors for the Form and Interactive Management Panels
+const webArchiveAddCardBtn = document.querySelector('.WebArchivePage_AddCardBtn');
+const webArchiveModalEditBtn = document.querySelector('.WebArchivePage_ModalEditBtn');
+const webArchiveFormOverlay = document.querySelector('.WebArchivePage_FormOverlay');
+const webArchiveFormCloseBtn = document.querySelector('.WebArchivePage_FormCloseBtn');
+const webArchiveHubForm = document.getElementById('WebArchiveHubForm');
+
+// Specific Form Input Fields Anchors
+const formCardId = document.getElementById('Form_CardId');
+const formMainCatSelect = document.getElementById('Form_MainCategorySelect');
+const formMainCatNew = document.getElementById('Form_MainCategoryNew');
+const formSubCatSelect = document.getElementById('Form_SubCategorySelect');
+const formSubCatNew = document.getElementById('Form_SubCategoryNew');
+const formName = document.getElementById('Form_Name');
+const formIcon = document.getElementById('Form_Icon');
+const formLink = document.getElementById('Form_Link');
+const formDescription = document.getElementById('Form_Description');
+const formDetailDesc = document.getElementById('Form_DetailDescription');
+const formPros = document.getElementById('Form_Pros');
+const formCons = document.getElementById('Form_Cons');
+
 let webArchiveCardsList = [];
+let globalDatabaseRecords = []; // Global anchor cache for tracking edits dynamically
 
 /* ------------------------------------------
    1.1 VISUAL SELECTION BOX CONTROLS
@@ -64,11 +86,12 @@ if (webArchiveFilterApplyBtn) {
    1.2 SPREADSHEET BACKEND STREAM COUPLING
    ------------------------------------------ */
 if (webArchiveDataBoard) {
-    webArchiveDataBoard.innerHTML = `<p style="text-align:center; opacity:0.6; font-style:italic; margin-top:4rem;">Loading family database entries...</p>`;
+    webArchiveDataBoard.innerHTML = `<p style="text-align:center; opacity:0.6; font-style:italic; margin-top:4rem;">L.A.U. Loading Library...</p>`;
 
     fetch(GOOGLE_SHEET_API_URL)
         .then(response => response.json())
         .then(websiteList => {
+            globalDatabaseRecords = websiteList; // Save copy to memory for form processing
             
             // Core Alphabetical Sorting Matrix
             websiteList.sort((a, b) => {
@@ -83,6 +106,7 @@ if (webArchiveDataBoard) {
 
             buildHierarchicalFilters(websiteList); 
             buildWebArchiveCards(websiteList); 
+            populateFormDropdownStructures(websiteList); // Setup modern dynamic selection boxes
             setupInteractiveListeners();     
         })
         .catch(err => {
@@ -192,13 +216,13 @@ function buildWebArchiveCards(data) {
             card.className = 'WebArchivePage_Card';
             card.setAttribute('data-subcategory', item.subCategory);
             
+            // Set attributes including our barcode tracker ID
+            card.setAttribute('data-id', item.id || "");
             card.setAttribute('data-icon', item.icon || "🌐");
             card.setAttribute('data-name', item.name);
             card.setAttribute('data-link', item.link);
-            
-            const deepDesc = item.detaildescription || "";
-            card.setAttribute('data-detaildesc', deepDesc);
-            
+            card.setAttribute('data-desc', item.description || "");
+            card.setAttribute('data-detaildesc', item.detaildescription || "");
             card.setAttribute('data-pros', item.pros || "");
             card.setAttribute('data-cons', item.cons || "");
 
@@ -267,6 +291,10 @@ function setupInteractiveListeners() {
                 const targetCard = e.target.closest('.WebArchivePage_Card');
                 if (!targetCard) return;
 
+                // Bind the sheet ID directly onto the viewing modal edit button frame
+                const cardId = targetCard.getAttribute('data-id');
+                webArchiveModalEditBtn.setAttribute('data-target-id', cardId);
+
                 const name = targetCard.getAttribute('data-name');
                 const link = targetCard.getAttribute('data-link');
                 const subtag = targetCard.getAttribute('data-subcategory');
@@ -283,7 +311,6 @@ function setupInteractiveListeners() {
                 webArchiveModalOverlay.querySelector('.WebArchivePage_ModalSubTag').textContent = subtag;
                 webArchiveModalOverlay.querySelector('.WebArchivePage_ModalDeepDesc').textContent = detailDesc;
                 
-                // Fixed target selectors for tradeoffs box alignment synchronization
                 const prosList = webArchiveModalOverlay.querySelector('.WebArchivePage_TradeOffColumn:nth-child(1) ul');
                 prosList.innerHTML = pros.map(pro => `<li>${pro.trim()}</li>`).join('');
                 
@@ -297,6 +324,189 @@ function setupInteractiveListeners() {
 
     if (webArchiveModalCloseBtn) {
         webArchiveModalCloseBtn.onclick = () => { webArchiveModalOverlay.style.display = 'none'; };
-        window.onclick = (e) => { if (e.target === webArchiveModalOverlay) webArchiveModalOverlay.style.display = 'none'; };
     }
+}
+
+/* ==========================================
+   1.6 ENTRY FORM INTERFACE CONTROLS
+   ========================================== */
+if (webArchiveAddCardBtn) {
+    webArchiveAddCardBtn.onclick = () => {
+        // Reset form layout for clean additions
+        webArchiveHubForm.reset();
+        formCardId.value = "";
+        document.querySelector('.WebArchivePage_FormTitle').textContent = "Add New Resource";
+        
+        // Ensure manual text fields are hidden on open
+        formMainCatNew.style.display = 'none';
+        formSubCatNew.style.display = 'none';
+        formMainCatSelect.required = true;
+        formSubCatSelect.required = true;
+        
+        // Trigger select cascade initialization
+        formMainCatSelect.value = formMainCatSelect.options[0].value;
+        formMainCatSelect.dispatchEvent(new Event('change'));
+        
+        webArchiveFormOverlay.style.display = 'flex';
+    };
+}
+
+if (webArchiveModalEditBtn) {
+    webArchiveModalEditBtn.onclick = () => {
+        const targetId = webArchiveModalEditBtn.getAttribute('data-target-id');
+        const record = globalDatabaseRecords.find(item => String(item.id) === String(targetId));
+        
+        if (!record) return;
+
+        // Configure frame titles and load inputs
+        document.querySelector('.WebArchivePage_FormTitle').textContent = "Edit Existing Card";
+        formCardId.value = record.id;
+        formName.value = record.name || "";
+        formIcon.value = record.icon || "";
+        formLink.value = record.link || "";
+        formDescription.value = record.description || "";
+        formDetailDesc.value = record.detaildescription || "";
+        formPros.value = record.pros || "";
+        formCons.value = record.cons || "";
+
+        // Synchronize drop-down assignments
+        formMainCatSelect.value = record.mainCategory;
+        formMainCatSelect.dispatchEvent(new Event('change'));
+        formSubCatSelect.value = record.subCategory;
+
+        // Hide plain text modifications panels
+        formMainCatNew.style.display = 'none';
+        formSubCatNew.style.display = 'none';
+
+        // Close display window and trigger editor layout view
+        webArchiveModalOverlay.style.display = 'none';
+        webArchiveFormOverlay.style.display = 'flex';
+    };
+}
+
+if (webArchiveFormCloseBtn) {
+    webArchiveFormCloseBtn.onclick = () => { webArchiveFormOverlay.style.display = 'none'; };
+}
+
+// Global dismiss handling logic rules
+window.onclick = (e) => {
+    if (e.target === webArchiveModalOverlay) webArchiveModalOverlay.style.display = 'none';
+    if (e.target === webArchiveFormOverlay) webArchiveFormOverlay.style.display = 'none';
+};
+
+/* ==========================================
+   1.7 DYNAMIC FIELD CASCADE CONTROLS
+   ========================================= */
+function populateFormDropdownStructures(data) {
+    const categoryTree = {};
+    
+    data.forEach(item => {
+        if (!item.mainCategory || !item.subCategory) return;
+        if (!categoryTree[item.mainCategory]) {
+            categoryTree[item.mainCategory] = new Set();
+        }
+        categoryTree[item.mainCategory].add(item.subCategory);
+    });
+
+    // Populate Main Category box list options
+    formMainCatSelect.innerHTML = `<option value="" disabled selected>Select a Main Category...</option>`;
+    Object.keys(categoryTree).sort().forEach(main => {
+        formMainCatSelect.innerHTML += `<option value="${main}">${main}</option>`;
+    });
+    formMainCatSelect.innerHTML += `<option value="__NEW_MAIN__">+ Create New Main Category...</option>`;
+
+    // Set listener to update Subcategories when Main Category changes
+    formMainCatSelect.onchange = () => {
+        const chosenMain = formMainCatSelect.value;
+        
+        if (chosenMain === "__NEW_MAIN__") {
+            formMainCatNew.style.display = 'block';
+            formMainCatNew.required = true;
+            
+            // Lock and shift sub category into text input fallback execution mode
+            formSubCatSelect.innerHTML = `<option value="__NEW_SUB__">+ Create New Sub Category...</option>`;
+            formSubCatSelect.value = "__NEW_SUB__";
+            formSubCatSelect.dispatchEvent(new Event('change'));
+        } else {
+            formMainCatNew.style.display = 'none';
+            formMainCatNew.required = false;
+            formMainCatNew.value = "";
+
+            formSubCatSelect.innerHTML = `<option value="" disabled selected>Select a Sub Category...</option>`;
+            if (categoryTree[chosenMain]) {
+                Array.from(categoryTree[chosenMain]).sort().forEach(sub => {
+                    formSubCatSelect.innerHTML += `<option value="${sub}">${sub}</option>`;
+                });
+            }
+            formSubCatSelect.innerHTML += `<option value="__NEW_SUB__">+ Create New Sub Category...</option>`;
+            formSubCatSelect.disabled = false;
+        }
+    };
+
+    // Sub selection configuration monitoring checks
+    formSubCatSelect.onchange = () => {
+        if (formSubCatSelect.value === "__NEW_SUB__") {
+            formSubCatNew.style.display = 'block';
+            formSubCatNew.required = true;
+        } else {
+            formSubCatNew.style.display = 'none';
+            formSubCatNew.required = false;
+            formSubCatNew.value = "";
+        }
+    };
+}
+
+/* ==========================================
+   1.8 ASYNC DATA SUBMISSION PIPELINE
+   ========================================== */
+if (webArchiveHubForm) {
+    webArchiveHubForm.onsubmit = (e) => {
+        e.preventDefault(); // Lock native screen reload parameters
+
+        const submitBtn = webArchiveHubForm.querySelector('.WebArchivePage_FormSubmitBtn');
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Processing Stream...";
+
+        // Extract value mappings or swap values to custom text inputs if created new
+        const finalMainCategory = formMainCatSelect.value === "__NEW_MAIN__" ? formMainCatNew.value.trim() : formMainCatSelect.value;
+        const finalSubCategory = formSubCatSelect.value === "__NEW_SUB__" ? formSubCatNew.value.trim() : formSubCatSelect.value;
+
+        // Build transmission layout packet payload block
+        const submissionPayload = {
+            id: formCardId.value ? parseInt(formCardId.value) : null,
+            mainCategory: finalMainCategory,
+            subCategory: finalSubCategory,
+            name: formName.value.trim(),
+            icon: formIcon.value.trim(),
+            link: formLink.value.trim(),
+            description: formDescription.value.trim(),
+            detaildescription: formDetailDesc.value.trim(),
+            pros: formPros.value.trim(),
+            cons: formCons.value.trim()
+        };
+
+        // Fire asynchronous transaction stream to Google Cloud Apps Script Core Engine
+        fetch(GOOGLE_SHEET_API_URL, {
+            method: 'POST',
+            body: JSON.stringify(submissionPayload)
+        })
+        .then(res => res.json())
+        .then(response => {
+            if (response.status === "success") {
+                alert(response.message);
+                webArchiveFormOverlay.style.display = 'none';
+                window.location.reload(); // Synchronize layout views
+            } else {
+                alert("Matrix Overload: " + response.message);
+                submitBtn.disabled = false;
+                submitBtn.textContent = "Save to Hub";
+            }
+        })
+        .catch(err => {
+            console.error("Transmission Failure Error:", err);
+            alert("Connection lost to transmission stream cloud engine.");
+            submitBtn.disabled = false;
+            submitBtn.textContent = "Save to Hub";
+        });
+    };
 }

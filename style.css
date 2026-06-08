@@ -266,16 +266,30 @@ body {
     outline: none;
 }
 
-.WebArchivePage_FilterToggleBtn {
+.WebArchivePage_FilterToggleBtn,
+.WebArchivePage_AddCardBtn {
     background: none;
     border: none;
     border-left: 1px solid #000000;
     padding: 0 1.2rem;
     font-size: 1.2rem;
     cursor: pointer;
+    font-family: inherit;
+    transition: all 0.15s ease;
 }
 
-.WebArchivePage_FilterToggleBtn:hover {
+/* Specific styling adjustments to keep the text button aligned */
+.WebArchivePage_AddCardBtn {
+    font-size: 0.9rem;
+    font-weight: bold;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.WebArchivePage_FilterToggleBtn:hover,
+.WebArchivePage_AddCardBtn:hover {
     background-color: #000000;
     color: #ffffff;
 }
@@ -510,7 +524,8 @@ body {
 /* ==========================================
    6.6 DETAIL OVERLAY POPUP MODAL FRAME
    ========================================== */
-.WebArchivePage_ModalOverlay {
+.WebArchivePage_ModalOverlay,
+.WebArchivePage_FormOverlay {
     display: none;
     position: fixed;
     top: 0;
@@ -525,7 +540,8 @@ body {
     box-sizing: border-box;
 }
 
-.WebArchivePage_ModalBox {
+.WebArchivePage_ModalBox,
+.WebArchivePage_FormBox {
     background-color: #ffffff;
     border: 2px solid #000000;
     width: 100%;
@@ -536,15 +552,41 @@ body {
     box-shadow: 0 10px 30px rgba(0,0,0,0.15);
 }
 
-.WebArchivePage_ModalCloseBtn {
+/* Inline upper controls positioning row matrix */
+.WebArchivePage_ModalControlsRow {
     position: absolute;
     top: 1rem;
     right: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.WebArchivePage_ModalCloseBtn,
+.WebArchivePage_FormCloseBtn {
     font-size: 1.8rem;
     background: none;
     border: none;
     cursor: pointer;
     font-weight: bold;
+    line-height: 1;
+    padding: 0;
+}
+
+.WebArchivePage_ModalEditBtn {
+    background-color: #ffffff;
+    border: 1px solid #000000;
+    padding: 0.25rem 0.6rem;
+    font-family: inherit;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.WebArchivePage_ModalEditBtn:hover {
+    background-color: #000000;
+    color: #ffffff;
 }
 
 .WebArchivePage_ModalHeader {
@@ -554,6 +596,7 @@ body {
     border-bottom: 1px solid #000000;
     padding-bottom: 1rem;
     margin-bottom: 1.5rem;
+    margin-top: 0.5rem; /* Leaves layout clearance for upper row buttons */
 }
 
 .WebArchivePage_ModalIcon {
@@ -617,4 +660,144 @@ body {
     font-size: 0.9rem;
     line-height: 1.5;
     text-align: left;
+}
+
+/* ==========================================
+   6.7 NEW MODAL ENTRY FORM SCHEMATICS
+   ========================================== */
+.WebArchivePage_FormBox {
+    max-height: 85vh;
+    overflow-y: auto;
+}
+
+/* Custom scrollbar interface for form panels */
+.WebArchivePage_FormBox::-webkit-scrollbar {
+    width: 6px;
+}
+.WebArchivePage_FormBox::-webkit-scrollbar-thumb {
+    background-color: #000000;
+}
+.WebArchivePage_FormBox::-webkit-scrollbar-track {
+    background-color: #f9f9f9;
+}
+
+.WebArchivePage_FormTitle {
+    margin: 0 0 1.5rem 0;
+    font-size: 1.6rem;
+    font-weight: 700;
+    border-bottom: 1px solid #000000;
+    padding-bottom: 0.5rem;
+    text-align: left;
+}
+
+.WebArchivePage_FormField {
+    margin-bottom: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    text-align: left;
+}
+
+.WebArchivePage_FormField label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05rem;
+    opacity: 0.7;
+}
+
+.WebArchivePage_FormField input[type="text"],
+.WebArchivePage_FormField input[type="url"],
+.WebArchivePage_FormField select,
+.WebArchivePage_FormField textarea {
+    width: 100%;
+    padding: 0.7rem;
+    font-family: inherit;
+    font-size: 0.95rem;
+    border: 1px solid #000000;
+    background-color: #ffffff;
+    outline: none;
+    box-sizing: border-box;
+    transition: background-color 0.15s ease;
+}
+
+.WebArchivePage_FormField input:focus,
+.WebArchivePage_FormField select:focus,
+.WebArchivePage_FormField textarea:focus {
+    background-color: #fafafa;
+}
+
+.WebArchivePage_FormField textarea {
+    resize: vertical;
+}
+
+/* Margins for the fallback dynamic custom text fields */
+#Form_MainCategoryNew,
+#Form_SubCategoryNew {
+    margin-top: 0.5rem;
+}
+
+.WebArchivePage_FormActions {
+    margin-top: 2rem;
+}
+
+.WebArchivePage_FormSubmitBtn {
+    width: 100%;
+    padding: 0.85rem;
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 1rem;
+    border: 1px solid #000000;
+    background-color: #000000;
+    color: #ffffff;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.WebArchivePage_FormSubmitBtn:hover {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+.WebArchivePage_FormSubmitBtn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: #666666;
+    color: #ffffff;
+}
+
+/* ==========================================
+   6.8 HYBRID FLUID SCALING (ALL SCREENS)
+   ========================================== */
+
+/* 1. Make the main layout board naturally fluid instead of locked at 1100px */
+.WebArchivePage_DataBoard {
+    width: 100%;
+    max-width: clamp(1100px, 85vw, 1650px); /* Smoothly scales from standard desktop up to widescreen */
+}
+
+/* 2. Make the cards expand or contract smoothly based on the viewport width */
+.WebArchivePage_Card {
+    /* Minimum width: 240px (mobile), Ideal fluid width: 18% of screen, Maximum width: 310px (widescreen) */
+    flex: 0 0 clamp(240px, 18vw, 310px); 
+    /* Padding shrinks slightly on smaller viewports */
+    padding: clamp(1rem, 1.2vw, 1.25rem); 
+}
+
+/* 3. Fluid typography: Text shrinks beautifully on phones and grows cleanly on desktops */
+.WebArchivePage_CategoryLane h2 {
+    font-size: clamp(1.4rem, 2vw, 1.8rem);
+}
+
+.WebArchivePage_CardTitleLink {
+    font-size: clamp(1.1rem, 1.3vw, 1.25rem);
+}
+
+.WebArchivePage_CardDesc {
+    font-size: clamp(0.8rem, 0.95vw, 0.9rem);
+    line-height: clamp(1.35, 1.4vw, 1.4);
+}
+
+.WebArchivePage_CardSubTag {
+    font-size: clamp(0.65rem, 0.75vw, 0.75rem);
 }
