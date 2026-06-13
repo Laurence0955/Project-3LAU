@@ -491,7 +491,21 @@ body {
 }
 
 .WebArchivePage_CardIcon {
-    font-size: 1.3rem;
+    font-size: 1.6rem;
+    width: 60px;               /* Locks structural horizontal bounds */
+    height: 60px;              /* Locks structural vertical bounds */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;          /* Crops any edge leakage clean */
+}
+
+.card-icon-img {
+    width: 65%;               /* Spans full constrained box area */
+    height: 65%;              /* Spans full constrained box area */
+    object-fit: contain;       /* Prevents stretching, maintains exact aspect ratio */
+    background-color: transparent;
+    display: block;
 }
 
 .WebArchivePage_CardSubTag {
@@ -800,4 +814,253 @@ body {
 
 .WebArchivePage_CardSubTag {
     font-size: clamp(0.65rem, 0.75vw, 0.75rem);
+}
+
+
+/* ==========================================================================
+   ASSET REGISTRY 3-COLUMN SYSTEM LAYOUT
+   ========================================================================== */
+
+/* Main wrapper row holding all 3 columns below the logo header */
+.AssetRegistryPage_ColumnsLayout {
+    display: flex;
+    gap: 1.5rem;
+    width: 100%;
+    margin-top: 2rem;
+    margin-bottom: 3rem;
+    align-items: stretch;
+}
+
+/* Base styles for side columns (Left and Right) */
+.AssetRegistryPage_SideColumn {
+    flex: 0 0 250px; /* Locks the side column width to 250px wide */
+    background-color: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Center Column - Expands dynamically to consume all leftover space */
+.AssetRegistryPage_CenterColumn {
+    flex: 1; /* Automatically scales up to fill the middle space */
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    min-width: 450px; /* Prevents the center floorplan from compressing too small */
+}
+
+/* Column Headers matching system formatting styling rules */
+.ColumnHeader {
+    background-color: #f1f1f1;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.ColumnHeader h3 {
+    margin: 0;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #333333;
+}
+
+/* Column Content Body Containers */
+.ColumnBody {
+    padding: 1rem;
+    flex: 1;
+    overflow-y: auto; /* Adds clean scrollbars if data lists overflow the viewport */
+}
+
+/* ==========================================================================
+   7.ASSET REGISTRY 3-COLUMN SYSTEM LAYOUT
+   ========================================================================== */
+
+/* 7.1Main wrapper row holding all 3 columns below the logo header */
+.AssetRegistryPage_ColumnsLayout {
+    display: flex;
+    gap: 1.5rem;
+    width: 100%;
+    margin-top: 2rem;
+    margin-bottom: 3rem;
+    align-items: stretch;
+}
+
+/* 7.2 Base styles for side columns (Left and Right) */
+.AssetRegistryPage_SideColumn {
+    flex: 0 0 250px; /* Locks the side column width to 250px wide */
+    background-color: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 7.3 Center Column - Expands dynamically to consume all leftover space */
+.AssetRegistryPage_CenterColumn {
+    flex: 1; /* Automatically scales up to fill the middle space */
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    min-width: 450px; /* Prevents the center floorplan from compressing too small */
+}
+
+/* 7.4Column Headers matching system formatting styling rules */
+.ColumnHeader {
+    background-color: #f1f1f1;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.ColumnHeader h3 {
+    margin: 0;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #333333;
+}
+
+/* 7.5Column Content Body Containers */
+.ColumnBody {
+    padding: 1rem;
+    flex: 1;
+    overflow-y: auto; /* Adds clean scrollbars if data lists overflow the viewport */
+}
+
+/* 7.6 The parent visual room container boundary (The "Sala" workspace box) */
+.AssetRegistry_LiveFloorplan {
+    position: relative; /* Essential: Absolute child element positions calculate relative to this box */
+    width: 100%;
+    height: 500px; /* Sets the operational grid workspace height boundary */
+    background-color: #fafafa;
+    border: 2px dashed #ccc;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+/* 7.7 Numbered bounding box shapes mapped from spreadsheet coordinate metrics */
+.CanvasSpatialBlock {
+    position: absolute; /* Allows exact placement using top (pos_y) and left (pos_x) arrays */
+    background-color: rgba(0, 0, 0, 0.05);
+    border: 2px solid #000000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+/* 7.8 Hover highlights to indicate an interactive object component grid link */
+.CanvasSpatialBlock:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    transform: scale(1.02);
+}
+
+/* 7.9 shet? */
+CSS
+/* ==========================================================================
+   ASSET REGISTRY FORM OVERLAY & MODAL SYSTEM
+   ========================================================================== */
+
+/* Fullscreen Background Dimmer */
+.AssetRegistry__Overlay {
+    display: none; /* Controlled by JavaScript runtime state */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* Centralized Form Card Container */
+.AssetRegistry__ModalCard {
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    box-sizing: border-box;
+}
+
+.AssetRegistry__ModalTitle {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+/* Form Layout Components */
+.AssetRegistry__FormGroup {
+    margin-bottom: 1rem;
+}
+
+.AssetRegistry__FormLabel {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 0.3rem;
+    font-size: 0.85rem;
+}
+
+.AssetRegistry__FormInput,
+.AssetRegistry__FormTextarea {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.AssetRegistry__FormTextarea {
+    height: 70px;
+    resize: none;
+}
+
+/* Action Row Layout */
+.AssetRegistry__FormActionRow {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+}
+
+/* Base Button Structure */
+.AssetRegistry__Btn {
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 4px;
+    box-sizing: border-box;
+    transition: background-color 0.2s ease, opacity 0.2s ease;
+}
+
+/* Button Structural Modifiers */
+.AssetRegistry__Btn--Cancel {
+    border: 1px solid #cccccc;
+    background-color: #eeeeee;
+    color: #333333;
+}
+
+.AssetRegistry__Btn--Cancel:hover {
+    background-color: #e0e0e0;
+}
+
+.AssetRegistry__Btn--Save {
+    border: none;
+    background-color: #000000;
+    color: #ffffff;
+}
+
+.AssetRegistry__Btn--Save:hover {
+    opacity: 0.85;
 }

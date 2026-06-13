@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>L.A.U. - Asset Registry</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <main class="MainCanvas WebArchivePage_CenterWrapper">
+
+        <section class="WebArchivePage_Logo">
+            <h1><a href="Homepage.html" class="WebArchivePage_Logo_Link">L.A.U.</a></h1>
+            <p class="WebArchivePage_Logo_Sub">Library Access Unit</p>
+            <p class="WebArchivePage_Logo_PageName">Asset Registry</p>
+        </section>
+
+        <div style="width: 100%; max-width: 1100px; display: flex; justify-content: flex-end; margin-bottom: 1rem;">
+            <button class="WebArchivePage_AddCardBtn" id="AssetRegistry_AddBtn"
+                style="height: 40px; padding: 0 1.5rem; font-weight: bold; cursor: pointer;">
+                + Add Asset Node
+            </button>
+        </div>
+
+        <div class="AssetRegistryPage_ColumnsLayout">
+
+            <aside class="AssetRegistryPage_SideColumn AssetRegistryPage_LeftNav">
+                <div class="ColumnHeader">
+                    <h3>Navigation</h3>
+                    <input type="text" class="AssetRegistry_SearchInput" placeholder="Search assets..."
+                        style="width: 100%; margin-top: 0.5rem; padding: 0.3rem; font-size: 0.8rem; border: 1px solid #ccc; border-radius: 4px;">
+                </div>
+                <div class="ColumnBody" id="AssetLeftNavTree">
+                    <p style="opacity:0.5; font-style:italic; font-size:0.9rem;">Loading locations...</p>
+                </div>
+            </aside>
+
+            <section class="AssetRegistryPage_CenterColumn AssetRegistryPage_CanvasWorkspace">
+                <div class="ColumnHeader">
+                    <h3>Spatial Floorplan</h3>
+                </div>
+                <div class="ColumnBody">
+                    <div id="SpatialFloorplanCanvas" class="AssetRegistry_LiveFloorplan">
+                    </div>
+                </div>
+            </section>
+
+            <aside class="AssetRegistryPage_SideColumn AssetRegistryPage_DetailsPanel">
+                <div class="ColumnHeader">
+                    <h3>Asset Details</h3>
+                </div>
+                <div class="ColumnBody" id="AssetDetailsInspector">
+                    <p style="opacity:0.5; font-style:italic; font-size:0.9rem;">Select an item to view parameters.</p>
+                </div>
+            </aside>
+
+        </div>
+
+    </main>
+
+    <footer class="Footer">
+        <div class="FooterContent">
+            <h3>About L.A.U.</h3>
+            <p>A centralized library and utility dashboard tailored for family file access, tracking, and shared wisdom
+                resources.</p>
+            <p>Contact: <a href="mailto:familyhub@example.com">familyhub@example.com</a></p>
+        </div>
+    </footer>
+
+    <template id="AssetInspectorTemplate">
+        <div class="InspectorCard_Content entry-wrapper">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                <span class="inspector-badge text-uppercase font-bold data-type"></span>
+                <button class="WebArchivePage_ModalEditBtn AssetRegistry_EditTriggerBtn"
+                    style="cursor: pointer; padding: 0.2rem 0.6rem; font-size: 0.8rem; font-weight: 600;">Edit</button>
+            </div>
+
+            <h2 class="inspector-title font-bold data-name"></h2>
+            <p class="inspector-meta-id text-xs">Registry Node Verification ID: <code class="data-id"></code></p>
+            <hr class="inspector-divider">
+
+            <h4 class="inspector-section-label text-uppercase text-xs font-semibold">Description Context</h4>
+            <p class="inspector-desc-body text-sm data-desc"></p>
+
+            <h4 class="inspector-section-label text-uppercase text-xs font-semibold">Spatial Real Coordinate Metrics
+            </h4>
+            <div class="inspector-coords-box font-mono text-xs">
+                <div>Horizontal Origin X-Axis : <span class="data-x"></span>px</div>
+                <div>Vertical Origin Y-Axis : <span class="data-y"></span>px</div>
+                <div>Dimension Layer Width : <span class="data-w"></span>px</div>
+                <div>Dimension Layer Height : <span class="data-h"></span>px</div>
+            </div>
+
+            <h4 class="inspector-section-label text-uppercase text-xs font-semibold">State</h4>
+            <p class="inspector-status-indicator text-sm font-bold dynamic-status-wrapper">
+                ● <span class="data-status"></span>
+            </p>
+        </div>
+    </template>
+
+    <div id="AssetRegistry_FormOverlay" class="AssetRegistry__Overlay">
+        <div class="AssetRegistry__ModalCard">
+            <h3 id="AssetRegistry_ModalTitle" class="AssetRegistry__ModalTitle">Add New Asset Node</h3>
+
+            <form id="AssetRegistry_HubForm" class="AssetRegistry__Form">
+                <input type="hidden" id="AssetRegistry_FormId">
+
+                <div class="AssetRegistry__FormGroup">
+                    <label for="AssetRegistry_FormName" class="AssetRegistry__FormLabel">Object Name</label>
+                    <input type="text" id="AssetRegistry_FormName" class="AssetRegistry__FormInput" required>
+                </div>
+
+                <div class="AssetRegistry__FormGroup">
+                    <label for="AssetRegistry_FormType" class="AssetRegistry__FormLabel">Category Type</label>
+                    <input type="text" id="AssetRegistry_FormType" class="AssetRegistry__FormInput"
+                        placeholder="e.g. FURNITURE, EQUIPMENT" required>
+                </div>
+
+                <div class="AssetRegistry__FormGroup">
+                    <label for="AssetRegistry_FormDescription" class="AssetRegistry__FormLabel">Description
+                        Context</label>
+                    <textarea id="AssetRegistry_FormDescription" class="AssetRegistry__FormTextarea"></textarea>
+                </div>
+
+                <div class="AssetRegistry__FormActionRow">
+                    <button type="button" id="AssetRegistry_BtnCloseForm"
+                        class="AssetRegistry__Btn AssetRegistry__Btn--Cancel">Cancel</button>
+                    <button type="submit" class="AssetRegistry__Btn AssetRegistry__Btn--Save">Save Node</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
